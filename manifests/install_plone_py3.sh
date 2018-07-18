@@ -4,25 +4,31 @@
 
 AS_VAGRANT="sudo -u vagrant"
 SHARED_DIR="/vagrant"
-INSTALL_TARGET="buildout.coredev"
+INSTALL_TARGET="coredev_py3"
 VHOME="/home/vagrant"
 COREDEV_D="$VHOME/${INSTALL_TARGET}"
-COREDEV_URL="https://github.com/plone/${INSTALL_TARGET}.git"
-MY_PYTHON="Python-2.7"
+COREDEV_URL="https://github.com/plone/buildout.coredev.git"
+MY_PYTHON="Python-3.6"
 PYTHON_VB="$VHOME/$MY_PYTHON"
 
+# install pip and virtualenv for python 3.6
+wget -q https://bootstrap.pypa.io/get-pip.py
+python3.6 get-pip.py 1>/dev/null
+pip3.6 install virtualenv
+ln -sf /usr/local/bin/virtualenv /usr/local/bin/virtualenv3.6
+
 if [ ! -d $MY_PYTHON ]; then
-    echo "Creating a Python2 virtualenv ..."
-    $AS_VAGRANT /usr/bin/virtualenv --clear -q $PYTHON_VB
+    echo "Creating a Python 3 virtualenv ..."
+    $AS_VAGRANT virtualenv3.6 -q $PYTHON_VB
     if [ ! -x $PYTHON_VB ]; then
-        echo "Failed to create virtualenv for Python"
+        echo "Failed to create virtualenv for $MY_PYTHON"
         exit 1
     fi
 fi
 
 if [ ! -d $INSTALL_TARGET ]; then
     echo "Getting a clone of ${INSTALL_TARGET} from github"
-    $AS_VAGRANT git clone $COREDEV_URL
+    $AS_VAGRANT git clone -b 5.2 $COREDEV_URL $INSTALL_TARGET
     if [ ! -d $INSTALL_TARGET ]; then
         echo "Failed to checkout buildout.coredev"
         exit 1
@@ -41,7 +47,7 @@ if [ ! -d $INSTALL_TARGET ]; then
 else
     if [ -x $PYTHON_VB/bin/buildout ]; then
         cd $COREDEV_D
-        $AS_VAGRANT $PYTHON_VB/bin/buildout
+        $AS_VAGRANT $PYTHON_VB/bin/buildout -c py3.cfg
     fi
 fi
 
@@ -62,7 +68,7 @@ for fn in ${COREDEV_D}/*.cfg; do
     fi
 done
 
-# copy and link back to src
+# symbolic link for downloaded sources
 if [ ! -d ${SHARED_DIR}/${INSTALL_TARGET}/src ]; then
     if [ -d ${COREDEV_D}/src ]; then
         mv ${COREDEV_D}/src ${SHARED_DIR}/${INSTALL_TARGET}

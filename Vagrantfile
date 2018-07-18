@@ -1,9 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant::Config.run do |config|
-    config.vm.box = "precise32"
-    config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-i386-vagrant-disk1.box"
+Vagrant.configure("1") do |config|
+    config.vm.box = "trusty64"
+    config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
 
     config.vm.forward_port 8080, 8080
 
@@ -29,6 +29,12 @@ Vagrant::Config.run do |config|
     # install Plone
     config.vm.provision :shell do |shell|
         shell.path = "manifests/install_plone.sh"
+        shell.args = RUBY_PLATFORM
+    end
+
+    # install Plone PY3
+    config.vm.provision :shell do |shell|
+        shell.path = "manifests/install_plone_py3.sh"
         shell.args = RUBY_PLATFORM
     end
 end
