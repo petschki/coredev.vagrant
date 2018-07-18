@@ -38,11 +38,6 @@ if [ ! -d $INSTALL_TARGET ]; then
         echo "${PYTHON_VB}/bin/buildout missing. \"${PYTHON_VB}/bin/pip install -r requirements.txt\" failed."
         exit 1
     fi
-else
-    if [ -x $PYTHON_VB/bin/buildout ]; then
-        cd $COREDEV_D
-        $AS_VAGRANT $PYTHON_VB/bin/buildout
-    fi
 fi
 
 # put .cfg and src into the shared directory,
@@ -84,4 +79,4 @@ done
 echo
 echo "DONE!"
 echo "Shared files are in ${COREDEV_D}."
-echo "You may run the buildout by running 'vagrant provision' or manually with 'vagrant ssh'"
+echo "You may run the buildout manually by running 'vagrant ssh'"
