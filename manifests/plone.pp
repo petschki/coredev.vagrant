@@ -3,6 +3,9 @@ class plone {
   package { "build-essential":
     ensure => present,
   }
+  package { "python-virtualenv":
+    ensure => present,
+  }
   package { "python-dev":
     ensure => present,
   }
@@ -24,6 +27,14 @@ class plone {
     ensure => present,
   }
   package { "python-pip":
+    ensure => present,
+  }
+
+  # python 3.6
+  package { "python3.6":
+    ensure => present,
+  }
+  package { "python3.6-dev":
     ensure => present,
   }
 
