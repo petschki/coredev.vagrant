@@ -89,7 +89,6 @@ Editing Plone configuration and source files
 --------------------------------------------
 
 After running ``vagrant up``, you should have a ``coredev_py2`` and ``coredev_py3`` subdirectory.
-In it, you'll find your buildout configuration files and a "src" directory.
 When you did the buildout manually you have to run ``vagrant provision`` . This copies
 all the development checkouts to the "src/" folder in the shared directory and symlinks
 them back to the buildout.
