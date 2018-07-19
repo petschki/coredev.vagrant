@@ -38,6 +38,12 @@ class plone {
     ensure => present,
   }
 
+  # transform utilities
+  # htmlto<xxx>
+  package { "poppler-utils":
+    ensure => present,
+  }
+
   # used for creating a PuTTy-compatible key file
   package { "putty-tools":
     ensure => present,
