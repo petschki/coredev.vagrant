@@ -11,15 +11,17 @@ COREDEV_URL="https://github.com/plone/buildout.coredev.git"
 MY_PYTHON="Python-3.6"
 PYTHON_VB="$VHOME/$MY_PYTHON"
 
-# install pip and virtualenv for python 3.6
-wget -q https://bootstrap.pypa.io/get-pip.py
-python3.6 get-pip.py 1>/dev/null
-pip3.6 install virtualenv
-ln -sf /usr/local/bin/virtualenv /usr/local/bin/virtualenv3.6
+if [ ! -f "$VHOME/get-pip.py" ]; then
+    # install pip and virtualenv for python 3.6
+    wget -q https://bootstrap.pypa.io/get-pip.py
+    python3.6 get-pip.py 1>/dev/null
+    pip3.6 install virtualenv
+    ln -s /usr/local/bin/virtualenv /usr/local/bin/virtualenv3.6
+fi
 
 if [ ! -d $MY_PYTHON ]; then
     echo "Creating a Python 3 virtualenv ..."
-    $AS_VAGRANT virtualenv3.6 -q $PYTHON_VB
+    $AS_VAGRANT virtualenv3.6 --clear -q $PYTHON_VB
     if [ ! -x $PYTHON_VB ]; then
         echo "Failed to create virtualenv for $MY_PYTHON"
         exit 1

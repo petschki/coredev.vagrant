@@ -149,7 +149,7 @@ VirtualBox provides the virtual machine facilities. Vagrant makes setting it up,
 The guest operating system is the most recent Ubuntu LTS (12.0.4, Precise Pangolin), 32-bit (so that it will run on a 32- or 64-bit host).
 
 After setting up the operating system, Vagrant's provisioning system is used to load the required system packages,
-clone buildout.coredev and coredev_py3, and set up the convenience scripts and share directory.
+clone coredev_py2 and coredev_py3, and set up the convenience scripts and share directory.
 
 Problems or suggestions?
 ------------------------

@@ -2,5 +2,4 @@ plone
 .vagrant
 *.ppk
 /*.sh
-/buildout.coredev
-/coredev_py3
+/coredev_py?

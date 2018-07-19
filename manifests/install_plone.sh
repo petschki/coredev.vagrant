@@ -4,10 +4,10 @@
 
 AS_VAGRANT="sudo -u vagrant"
 SHARED_DIR="/vagrant"
-INSTALL_TARGET="buildout.coredev"
+INSTALL_TARGET="coredev_py2"
 VHOME="/home/vagrant"
 COREDEV_D="$VHOME/${INSTALL_TARGET}"
-COREDEV_URL="https://github.com/plone/${INSTALL_TARGET}.git"
+COREDEV_URL="https://github.com/plone/buildout.coredev.git"
 MY_PYTHON="Python-2.7"
 PYTHON_VB="$VHOME/$MY_PYTHON"
 
@@ -22,9 +22,9 @@ fi
 
 if [ ! -d $INSTALL_TARGET ]; then
     echo "Getting a clone of ${INSTALL_TARGET} from github"
-    $AS_VAGRANT git clone $COREDEV_URL
+    $AS_VAGRANT git clone $COREDEV_URL $INSTALL_TARGET
     if [ ! -d $INSTALL_TARGET ]; then
-        echo "Failed to checkout buildout.coredev"
+        echo "Failed to checkout $INSTALL_TARGET"
         exit 1
     fi
     cd $COREDEV_D
