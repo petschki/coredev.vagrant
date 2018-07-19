@@ -88,9 +88,15 @@ To run a test suite, use a command like::
 Editing Plone configuration and source files
 --------------------------------------------
 
-After running "vagrant up", you should have a buildout.coredev subdirectory. In it, you'll find your buildout configuration files and a "src" directory. These are the matching items from a normal coredev installation. You may edit all the files.
+After running ``vagrant up``, you should have a ``coredev_py2`` and ``coredev_py3`` subdirectory.
+In it, you'll find your buildout configuration files and a "src" directory.
+When you did the buildout manually you have to run ``vagrant provision`` . This copies
+all the development checkouts to the "src/" folder in the shared directory and symlinks
+them back to the buildout.
 
-All of this is happening in a directory that is shared with the guest operating system, and the .cfg files and src directory are linked back to the working copy of coredev on the guest machine. All the rest of the install is on the guest system only.
+All of this is happening in a directory that is shared with the guest operating system,
+and the .cfg files and src directory are linked back to the working copy of coredev
+on the guest machine. All the rest of the install is on the guest system only.
 
 Using the VirtualBox directly
 -----------------------------
@@ -144,9 +150,11 @@ The same is true for anything else that requires command-line interaction.
 What's under the hood
 ---------------------
 
-VirtualBox provides the virtual machine facilities. Vagrant makes setting it up, including port forwarding and shared folders, convenient. Vagrant also provides a wrapper around the Puppet and shell provisioning system.
+VirtualBox provides the virtual machine facilities. Vagrant makes setting it up,
+including port forwarding and shared folders, convenient. Vagrant also provides a
+wrapper around the Puppet and shell provisioning system.
 
-The guest operating system is the most recent Ubuntu LTS (12.0.4, Precise Pangolin), 32-bit (so that it will run on a 32- or 64-bit host).
+The guest operating system is the most recent Ubuntu LTS (14.04.5, Trusty), 64-bit.
 
 After setting up the operating system, Vagrant's provisioning system is used to load the required system packages,
 clone coredev_py2 and coredev_py3, and set up the convenience scripts and share directory.
