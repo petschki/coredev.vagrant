@@ -6,7 +6,10 @@ class plone {
   package { "python-virtualenv":
     ensure => present,
   }
-  package { "python-dev":
+  package { "zlib1g-dev":
+    ensure => present,
+  }
+  package { "libssl-dev":
     ensure => present,
   }
   package { "libjpeg-dev":

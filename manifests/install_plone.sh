@@ -8,16 +8,29 @@ INSTALL_TARGET="coredev_py2"
 VHOME="/home/vagrant"
 COREDEV_D="$VHOME/${INSTALL_TARGET}"
 COREDEV_URL="https://github.com/plone/buildout.coredev.git"
+PY_VERSION="2.7.15"
 MY_PYTHON="Python-2.7"
 PYTHON_VB="$VHOME/$MY_PYTHON"
 
 if [ ! -d $MY_PYTHON ]; then
-    echo "Creating a Python2 virtualenv ..."
-    $AS_VAGRANT /usr/bin/virtualenv --clear -q $PYTHON_VB
-    if [ ! -x $PYTHON_VB ]; then
-        echo "Failed to create virtualenv for Python"
+    echo "Downloading latest Python 2.7 ($PY_VERSION)"
+    wget -q https://www.python.org/ftp/python/$PY_VERSION/Python-$PY_VERSION.tgz
+    tar -xzvf Python-$PY_VERSION.tgz
+    cd Python-$PY_VERSION
+    ./configure --prefix=$PYTHON_VB
+    make && make install
+    chown vagrant:vagrant -R $PYTHON_VB
+    cd $VHOME
+    if [ ! -d $MY_PYTHON ]; then
+        echo "something went wrong while installing $PYTHON_VB"
         exit 1
     fi
+    echo "Installing pip with $PYTHON_VB/bin/python"
+    if [ ! -f "$VHOME/get-pip.py" ]; then
+        wget -q https://bootstrap.pypa.io/get-pip.py
+    fi
+    $AS_VAGRANT $PYTHON_VB/bin/python get-pip.py
+    rm -rf Python-$PY_VERSION*
 fi
 
 if [ ! -d $INSTALL_TARGET ]; then
